@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>home</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" />
+    </head>
+    <body>
+
+        {% if message %}
+            <p>メッセージ：{{ message }}</p>
+        {% endif %}
+
+        <h2>home</h2>
+
+        <br><br>
+        <button onclick="location.href='add_book'" formmethod="get">書籍を新規追加</button>
+        <br>
+        <button onclick="location.href='book_list'" formmethod="get">書籍の一覧を表示</button>
+        <br>
+        <button onclick="location.href='search_book'" formmethod="get">書籍を検索</button>
+
+    </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>home</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" />
+    </head>
+    <body>
+
+        {% if message %}
+            <p>メッセージ：{{ message }}</p>
+        {% endif %}
+
+        <h2>本</h2>
+        {% for book in books %}
+            <li>{{ book.name }}({{ book.price }} 円)</li>
+        {% endfor %}
+
+        <br><br>
+        <button onclick="location.href='home'" formmethod="get">ホームへ</button>
+
+    </body>
+</html>

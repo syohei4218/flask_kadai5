@@ -19,7 +19,7 @@ def create_table():
     conn.close()
 
 
-def init_add_user_info():
+def init_add():
 
     conn = sqlite3.connect(DB_DIR)
     cur = conn.cursor()
@@ -31,6 +31,25 @@ def init_add_user_info():
 
     cur.close()
     conn.close()
+
+
+def add(name, password):
+
+    conn = sqlite3.connect(DB_DIR)
+    cur = conn.cursor()
+
+    try:
+        cur.execute('insert into user_info(name, pass)values("{}", "{}")'.format(name, password))
+    except Exception as e:
+        print(e)
+        conn.rollback()
+        return False
+    else:
+        conn.commit()
+        return True
+    finally:
+        cur.close()
+        conn.close()
 
 
 def get_all():

@@ -3,13 +3,13 @@ import sys
 from threading import Thread
 
 from app.controllers.webserver import start
-from app.models import model
+from app.models import user_info_access
 
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 if __name__ == '__main__':
-    # model.create_table()
-    # model.add_user_info()
+    # user_info.create_table()
+    # user_info.init_add()
 
     serverThread = Thread(target=start)
     serverThread.start()

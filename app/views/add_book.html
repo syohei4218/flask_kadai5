@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>ADD BOOK</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" />
+    </head>
+    <body>
+
+        {% if error %}
+            <p>エラー：{{ error }}</p>
+        {% endif %}
+
+        <form action="/add_book" method="post">
+            <h1>ADD BOOK</h1>
+            <p>商品名：<input type="text" name="name" placeholder="book name（必須）" required/></p>
+            <p>値段：<input type="number" name="price" placeholder="price" /></p>
+            <button>追加</button>
+        </form>
+
+    </body>
+</html>
