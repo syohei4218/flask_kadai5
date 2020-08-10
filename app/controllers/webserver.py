@@ -32,9 +32,10 @@ def auth():
                 return redirect(url_for("home"))
             else:
                 # パスワードが異なる場合、ログインエラーページへ
-                return redirect(url_for("login_fail"))
+                return render_template("login.html", message="ログインエラー。パスワードが違います。")
     # ユーザが未存在の場合、ログインエラーページへ
-    return redirect(url_for("login_fail"))
+    return render_template("login.html", message="ログインエラー。ユーザが存在しません。")
+
 
 
 @app.route("/add_user", methods=["GET", "POST"])
@@ -42,7 +43,7 @@ def add_user():
     if request.method == "GET":
         # 書籍の追加ページを表示
         return render_template("add_user.html")
-    elif request.method == "POST":
+    else:
         name = request.form.get("name")
         password = request.form.get("pass")
 
@@ -67,6 +68,40 @@ def get_books():
     books = books_access.get_all()
 
     return render_template("book_list.html", books=books)
+
+
+@app.route("/book_list/<id>")
+def get_book(id):
+    # 全ての書籍を取得
+    book = books_access.get(id)
+
+    return render_template("book_list.html", books=book)
+
+
+@app.route("/edit_book/<id>", methods=["GET", "POST"])
+def edit_book(id):
+    if request.method == "GET":
+        book = books_access.get(id)
+        if book:
+            # 編集する書籍を取得できた場合
+            return render_template("edit_book.html", book=book[0])
+        else:
+            # 編集する書籍を取得できなかった場合
+            return redirect(url_for("error"))
+    else:
+        id = request.form.get("id")
+        name = request.form.get("name")
+        price = request.form.get("price")
+
+        book = books_access.get(id)
+        result = books_access.update(id, name, price)
+
+        if result:
+            # 更新に成功した場合
+            return redirect(url_for("home"))
+        else:
+            # 更新に失敗した場合
+            return render_template("edit_book.html", book=book[0], error="書籍の更新に失敗しました。")
 
 
 @app.route("/search_book", methods=["GET", "POST"])
@@ -97,15 +132,25 @@ def add_book():
         result = books_access.add(name, price)
         if result:
             # 登録に成功した場合
-            return render_template("home.html", message="書籍の追加に成功しました。")
+            return redirect(url_for("home"))
         else:
             # 登録に失敗した場合
             return render_template("add_book.html", error="書籍の追加に失敗しました。")
 
 
-@app.route("/login_fail")
-def login_fail():
-    return "login error"
+@app.route("/delete_book/<id>")
+def delete_book(id):
+    result = books_access.delte(id)
+    if result:
+        return redirect(url_for("home"))
+    else:
+        # 登録に失敗した場合
+        return redirect(url_for("error"))
+
+
+@app.route("/error")
+def error():
+    return render_template("error.html")
 
 
 def start():

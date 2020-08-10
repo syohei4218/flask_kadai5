@@ -2,7 +2,7 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>Login</title>
+        <title>LOGIN</title>
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" />
     </head>
     <body>
@@ -10,15 +10,17 @@
         {% if message %}
             <p>メッセージ：{{ message }}</p>
         {% endif %}
+        {% if error %}
+            <p>エラー：{{ error }}</p>
+        {% endif %}
 
         <form action="/auth" method="post">
-            <h1>Login</h1>
+            <h1>LOGIN</h1>
             <p><input type="text" name="name" placeholder="User id（必須）" required/></p>
             <p><input type="password" name="pass" placeholder="Password（必須）" required/></p>
             <button>Login</button>
         </form>
-
-        <br><br>
-        <button onclick="location.href='add_user'" formmethod="get">ユーザを新規追加</button>
+        <br>
+        <button onclick="location.href='/add_user'" formmethod="get">ユーザを新規追加</button>
     </body>
 </html>

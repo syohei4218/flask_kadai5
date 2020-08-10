@@ -6,18 +6,14 @@
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" />
     </head>
     <body>
-
-        {% if error %}
-            <p>エラー：{{ error }}</p>
-        {% endif %}
-
         <form action="/search_book" method="post">
-            <h1>SEARCH BOOK</h1>
+            <h2>SEARCH BOOK</h2>
             <p>ID：<input type="number" name="id" placeholder="ID"/></p>
             <p>商品名：<input type="text" name="name" placeholder="book name"/></p>
             <p>値段：<input type="number" name="price" placeholder="price"/></p>
             <button>検索</button>
         </form>
-
+        <br>
+        <button onclick="location.href='/home'" formmethod="get">ホームへ</button>
     </body>
 </html>

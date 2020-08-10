@@ -2,22 +2,35 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>home</title>
-        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" />
+        <title>BOOK LIST</title>
+        <link rel="stylesheet" href="static/style.css">
     </head>
     <body>
-
-        {% if message %}
-            <p>メッセージ：{{ message }}</p>
+        <h2>BOOK LIST</h2>
+        {% if not books %}
+            <p>書籍が存在しません。</p>
         {% endif %}
-
-        <h2>本</h2>
-        {% for book in books %}
-            <li>{{ book.name }}({{ book.price }} 円)</li>
-        {% endfor %}
-
-        <br><br>
-        <button onclick="location.href='home'" formmethod="get">ホームへ</button>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4">Books</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>名前</td><td>価格</td><td></td><td></td>
+                </tr>
+                {% for book in books %}
+                    <tr>
+                        <td>{{ book.name }}</td><td>{{ book.price }}</td>
+                        <td><button type="submit" onclick="location.href='/edit_book/{{ book.id }}'" formmethod="get">編集</button></td>
+                        <td><button onclick="location.href='/delete_book/{{ book.id }}'" formmethod="get">削除</button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <button onclick="location.href='/home'" formmethod="get">ホームへ</button>
 
     </body>
 </html>

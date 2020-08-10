@@ -4,42 +4,42 @@ DB_DIR = "db/sqlite3.db"
 
 
 def create_table():
+    """
+    テーブル作成。
+    初期に1度だけ行うこと。
+    """
     conn = sqlite3.connect(DB_DIR)
     cur = conn.cursor()
-    try:
-        cur.execute('CREATE TABLE books'
-                    '(id INTEGER PRIMARY KEY AUTOINCREMENT,'
-                    'name STRING not null,'
-                    'price int not null)')
-    except Exception as e:
-        print(e)
-        conn.rollback()
-    else:
-        conn.commit()
-    finally:
-        cur.close()
-        conn.close()
+    cur.execute('CREATE TABLE books'
+                '(id INTEGER PRIMARY KEY AUTOINCREMENT,'
+                'name STRING not null,'
+                'price int not null)')
+
+    conn.commit()
+    cur.close()
+    conn.close()
 
 
 def init_add():
+    """
+    初期値として固定のレコードを追加する用。
+    """
     conn = sqlite3.connect(DB_DIR)
     cur = conn.cursor()
 
-    try:
-        cur.execute('insert into books(name, price)values("鬼滅の刃 1", 200)')
-        cur.execute('insert into books(name, price) values("鬼滅の刃 2", 300)')
-        cur.execute('insert into books(name, price) values("鬼滅の刃 3", 400)')
-    except Exception as e:
-        print(e)
-        conn.rollback()
-    else:
-        conn.commit()
-    finally:
-        cur.close()
-        conn.close()
+    cur.execute('insert into books(name, price)values("鬼滅の刃 1", 200)')
+    cur.execute('insert into books(name, price) values("鬼滅の刃 2", 300)')
+    cur.execute('insert into books(name, price) values("鬼滅の刃 3", 400)')
+
+    conn.commit()
+    cur.close()
+    conn.close()
 
 
 def add(name, price):
+    """
+    booksテーブルに任意のレコードを追加
+    """
     conn = sqlite3.connect(DB_DIR)
     cur = conn.cursor()
 
@@ -58,6 +58,10 @@ def add(name, price):
 
 
 def get(id=None, name=None, price=None):
+    """
+    booksテーブルのレコードを任意で検索。
+    引数がない場合、全検索と同じ動きをするようにしている。
+    """
     conn = sqlite3.connect(DB_DIR)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
@@ -82,7 +86,63 @@ def get(id=None, name=None, price=None):
     return cur.fetchall()
 
 
+def update(id, name, price):
+    """
+    booksテーブルの1レコードを更新
+    """
+    conn = sqlite3.connect(DB_DIR)
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+
+    sql = 'update books set name = "{}", price = {} ' \
+          'where id = {}'.format(name, price, id)
+
+    try:
+        cur.execute(sql)
+    except Exception as e:
+        print(e)
+        conn.rollback()
+        return False
+    else:
+        conn.commit()
+        return True
+    finally:
+        cur.close()
+        conn.close()
+
+    return cur.fetchall()
+
+
+def delte(id):
+    """
+    booksテーブルの1レコードを更新
+    """
+    conn = sqlite3.connect(DB_DIR)
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+
+    sql = 'delete from books where id = "{}"'.format(id)
+
+    try:
+        cur.execute(sql)
+    except Exception as e:
+        print(e)
+        conn.rollback()
+        return False
+    else:
+        conn.commit()
+        return True
+    finally:
+        cur.close()
+        conn.close()
+
+    return cur.fetchall()
+
+
 def get_all():
+    """
+    booksテーブルのレコードを全検索。
+    """
     conn = sqlite3.connect(DB_DIR)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()

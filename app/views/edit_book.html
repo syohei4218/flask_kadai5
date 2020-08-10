@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>EDIT BOOK</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}" />
+    </head>
+    <body>
+
+        {% if error %}
+            <p>エラー：{{ error }}</p>
+        {% endif %}
+
+        <form action="/edit_book/{{ book.id }}" method="post">
+            <h1>EDIT BOOK</h1>
+            <p>ID：<input type="number" name="id" value={{ book.id }} readonly></p>
+            <p>商品名：<input type="text" name="name" value={{ book.name }}  placeholder="book name（必須）" required></p>
+            <p>値段：<input type="number" name="price" value={{ book.price }} placeholder="price（必須）" required/></p>
+            <button>更新</button>
+        </form>
+        <br>
+        <button onclick="location.href='/home'" formmethod="get">ホームへ</button>
+    </body>
+</html>

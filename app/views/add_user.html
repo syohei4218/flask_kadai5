@@ -12,11 +12,12 @@
         {% endif %}
 
         <form action="/add_user" method="post">
-            <h1>ADD USER</h1>
+            <h2>ADD USER</h2>
             <p>ユーザ名：<input type="text" name="name" placeholder="User id（必須）" required/></p>
             <p>パスワード：<input type="password" name="pass" placeholder="Password（必須）" required/></p>
             <button>ユーザを追加</button>
         </form>
-
+        <br>
+        <button onclick="location.href='/login'" formmethod="get">戻る</button>
     </body>
 </html>

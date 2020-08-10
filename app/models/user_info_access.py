@@ -4,7 +4,10 @@ DB_DIR = "db/sqlite3.db"
 
 
 def create_table():
-
+    """
+    テーブル作成。
+    初期に1度だけ行うこと。
+    """
     conn = sqlite3.connect(DB_DIR)
     cur = conn.cursor()
 
@@ -20,7 +23,9 @@ def create_table():
 
 
 def init_add():
-
+    """
+    初期値として固定のレコードを追加する用。
+    """
     conn = sqlite3.connect(DB_DIR)
     cur = conn.cursor()
 
@@ -34,7 +39,10 @@ def init_add():
 
 
 def add(name, password):
+    """
+    user_infoテーブルに任意のレコードを追加
 
+    """
     conn = sqlite3.connect(DB_DIR)
     cur = conn.cursor()
 
@@ -53,6 +61,9 @@ def add(name, password):
 
 
 def get_all():
+    """
+    user_infoテーブルのレコードを全検索。
+    """
     conn = sqlite3.connect(DB_DIR)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
